@@ -17,6 +17,7 @@ const classSchema = new mongoose.Schema({
     id: { type:Number, required:true,unique:true},
     date: { type: Date, default:Date.now },
 });
+// 使用插件
 classSchema.plugin(timestamps);
 classSchema.plugin(uniqueValidator);
 // 创建model
