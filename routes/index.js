@@ -55,23 +55,34 @@ router.post('/del', (req, res, next) => {
   const body = {
     id:req.body.id
   };
-  classModel.remove(body, (err,result) => {
-    if(err) {
-      return next(err);
+  if(!body.id){
+    res.send('{code: 200, message:"删除失败"}');
+  } else if(body.id=='all'){
+      classModel.remove({}, (err,result) => {
+          if(err) {
+            return next(err);
+          }
+          res.send(result);
+        });
+  } else {
+      classModel.remove(body, (err,result) => {
+            if(err) {
+              return next(err);
+            }
+            res.send(result);
+          });
     }
-    res.send(result);
-  });
 });
 
 // 删除 全部
-router.post('/delall', (req, res, next) => {
-  classModel.remove({}, (err,result) => {
-    if(err) {
-      return next(err);
-    }
-    res.send(result);
-  });
-});
+// router.post('/delall', (req, res, next) => {
+//   classModel.remove({}, (err,result) => {
+//     if(err) {
+//       return next(err);
+//     }
+//     res.send(result);
+//   });
+// });
 
 // 修改 condition 控制条件 update要修改的地方
 router.post('/update', (req, res, next) => {
